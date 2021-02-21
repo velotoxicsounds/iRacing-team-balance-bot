@@ -26,52 +26,102 @@ class DiscordChannel:
     commands_list_part_1 = dedent('''
       List of commands:
       
-      **status** - shows the current status of your server's data, and what actions I am able to perform with this data.
+      **status** - zeigt den aktuellen Status der Serverdaten und die Aktionen an, die ich mit diesen Daten ausführen kann.
       
-      **drivers** - show list of added drivers for this server
-      **add driver** Driver Name *Driver ID* - add this driver to the driver list for this server.
-          You can comma-separate multiple drivers.
-          You can write just the driver name, and I will look up the driver ID for you.
-          I will periodically check each driver's iRating and cache it if it's changed.
-      **remove driver** Driver Name - remove this driver from the driver list for this server.
-      **clear drivers** - clear the driver list for this server.
-          I won't monitor anything or alert you at all if you have no drivers, so this is a good way to let me know between events that I don't need to do anything.
+      **drivers** - Liste der hinzugefügten Treiber für diesen Server anzeigen
+      **add driver** Driver-ID *DRIVER-ID* - Fügen Sie diesen Fahrer der Fahrerliste für diesen Server hinzu.
+          Sie können mehrere Fahrer durch Kommas trennen.
+          Sie können nur den Fahrernamen schreiben, und ich werde die Driver-ID für Sie suchen.
+          Ich werde regelmäßig das iRating jedes Fahrers überprüfen und es zwischenspeichern, wenn es geändert wurde.
+      **remove driver** Driver Name - Entfernen Sie diesen Fahrer aus der Fahrerliste für diesen Server.
+      **clear drivers** - Löschen Sie die Fahrerliste für diesen Server.
+          Ich werde nichts überwachen oder Sie überhaupt warnen, wenn Sie keine Fahrer haben, also ist dies eine gute Möglichkeit, mich zwischen den Ereignissen wissen zu lassen, dass ich nichts tun muss.
       
-      **recheck rating** Driver Name - manually trigger a recheck of the named driver's road iRating.
-      **recheck rating all** - manually trigger a recheck of all drivers' road iRatings.
+      **recheck rating** Driver Name - manuell eine erneute Überprüfung des benannten Fahrers und dessen iRating auslösen.
+      **recheck rating all** - manuell eine Erneute Überprüfung aller Fahrer-iRatings auslösen.
     
-      **team sizes** - shows the allowed team sizes for the current event. I will only allow for teams of these sizes when calculating balance.
-          Once team sizes are set (and drivers are added), I will report on the optimal balance as it changes.
-      **set team sizes** *m*, *n*, ... - set the allowed team sizes for the current event. I will only allow for teams of these sizes when calculating balance.
-      
-      **combine drivers** Driver Name, Driver Name, .... - force balance calculations to only consider sets of teams where the named drivers are on a team together.
-        Note that using this feature may significantly hurt your server's ability to balance its drivers.
-      **combinations** - show current combinations of drivers.
-      **remove combination** Driver Name, Driver Name, ... - remove the combination of drivers listed.
-      **clear combinations** - clear all combinations.
+      **team sizes** - zeigt die zulässigen Teamgrößen für das aktuelle Ereignis an. Ich werde nur Teams dieser Größe bei der Berechnung der Balance zulassen.
+          Sobald Teamgrößen festgelegt sind (und Fahrer hinzugefügt werden), werde ich über die optimale Balance berichten, wenn diese sich ändert.
+      **set team sizes** *m*, *n*, ... - legen Sie die zulässigen Teamgrößen für das aktuelle Ereignis fest. Ich lasse nur Teams dieser Größen bei der Berechnung der Bilanz zu.
     ''').strip()
     await self.print(commands_list_part_1)
     commands_list_part_2 = dedent('''
-      **balance** - show most recently calculated optimal balance of team members into teams.
-      **recalculate balance** - manually trigger a recheck of the optimal balance based on most recently cached road iRatings.
-      
-      **teams** - show fixed teams for the upcoming event.
-          I will monitor the balance of these teams to make sure it does not fall outside of the configured threshold. 
-      **set teams** Driver Name, Driver Name, ...; ... - set fixed teams for the upcoming event. Team members are comma-separated and teams are semicolon-separated.
-      **set teams according to balance** sets teams to the most recently calculated optimal balance.
-      **clear teams** - clear the fixed teams for the upcoming event.
-      
-      **balance threshold** - show the balance threshold.
-          If the gap between fixed teams' average iRating falls outside of this threshold, I will alert you.
-          Before fixed teams are set, I will also note if the current optimal balance falls outside of this threshold - but I wouldn't worry about it too much yet.
-      **set balance threshold** *n* - set the balance threshold.
-      
-      **set notification channel** - set this channel as the channel I should use to send notifications.
-      **notification channel** - check which channel has been configured for notifications
-      
-      Remember to tag me at the beginning of a command message with {0.mention} !
+      **combine drivers** Driver Name, Driver Name, .... - Kraftbilanzberechnungen, um nur Gruppen von Teams zu berücksichtigen, bei denen die benannten Fahrer in einem Team zusammen sind.
+        Beachten Sie, dass die Verwendung dieser Funktion die Fähigkeit Ihres Servers, die Fahrer auszugleichen, erheblich beeinträchtigen kann.
+      **combinations** - aktuelle Kombinationen von Fahrern anzeigen.
+      **remove combination** Driver Name, Driver Name, ... - entfernen Sie die Kombination der aufgeführten Fahrer.
+      **clear combinations** - alle Kombinationen löschen.
     ''').strip().format(self.client.user)
     await self.print(commands_list_part_2)
+    commands_list_part_3 = dedent('''
+      **balance** - zuletzt berechnete optimale Balance der Teammitglieder in Teams.
+      **recalculate balance** - manuell eine erneute Überprüfung der optimalen Balance basierend auf den zuletzt zwischengespeicherten Fahrer-iRatings auslösen.
+      
+      **teams** - feste Teams für die kommende Veranstaltung anzuzeigen.
+          Ich werde die Bilanz dieser Teams überwachen, um sicherzustellen, dass sie nicht außerhalb des konfigurierten Schwellenwerts liegt. 
+      **set teams** Driver Name, Driver Name, ...; ... - feste Teams für das kommende Event festlegen. Teammitglieder sind durch Kommas getrennt, und Teams sind semikolonngetrennt.
+      **set teams according to balance** setzt die Teams auf die zuletzt berechnete optimale Balance.
+      **clear teams** - die festen Teams für die kommende Veranstaltung zu löschen.
+      
+      **balance threshold** - den Saldoschwellenwert anzeigen.
+          Wenn die Lücke zwischen dem durchschnittlichen IRating der teams außerhalb dieses Schwellenwerts liegt, werde ich Sie benachrichtigen.
+          Bevor feste Teams festgelegt werden, werde ich auch feststellen, wenn die aktuelle optimale Balance außerhalb dieser Schwelle liegt - aber ich würde mir noch keine allzu großen Sorgen machen.
+      **set balance threshold** *n* - den Saldoschwellenwert festlegen.
+      
+      **set notification channel** - legen Sie diesen Discord-Kanal als den Kanal fest, den ich zum Senden von Benachrichtigungen verwenden sollte.
+      **notification channel** - Überprüfen, welcher Kanal für Benachrichtigungen konfiguriert wurde
+      
+      Denken Sie daran, mich am Anfang einer Befehlsnachricht mit {0.mention} zu makieren !
+    ''').strip().format(self.client.user)
+    await self.print(commands_list_part_3)
+    commands_list_part_4 = dedent('''
+    List of commands:
+    
+    
+    **ZWEITER BOT** - Eigen Produktion Team Happen:
+	**FÜR DIESE BEFEHLE BRAUCHST DU DEN BOT NICHT MAKIEREN, HIER REICHT !happen_DEINBEFEHL**
+
+
+    **!happen_saveid <DeineIRACINGID>**
+        - [Hier zu finden https://members.iracing.com/membersite/account/Home.do , auf der rechten Seite über dem Menü Customer ID: XXXXXX] Dient zur automatischen Registrierung
+    
+        
+    **ADMIN UND MODIS**
+      
+    **!happen_allseries**
+        - Dadurch wird eine Liste aller aktuellen aktiven Seriennamen und IDs angezeigt (die für die bevorzugten Serienbefehle verwendet werden).
+    **!happen_setfavseries <Series IDs>** 
+        - Dadurch wird die Favoritenserie für Ihren Server festgelegt. Server-IDs sind in diesem Fall eine Liste von durch Kommas getrennten Serien-IDs, die über den Befehl !happen_allseries gefunden werden können. Das Festlegen von Favoritenserien ist erforderlich, um den Befehl !happen_currentseries zu verwenden.
+    **!happen_currentseries** 
+        - Sobald Lieblingsserien durch !happen_setfavseries wurden, druckt dieser Befehl Bilder, die die aktuellen Tracks für jede der Lieblingsserien für diese Rennwoche und die nächste Rennwoche zeigen.
+    **!happen_addfavseries** 
+        - Dies ist ähnlich wie !happen_setfavseries außer es fügt nur eine einzelne Serie zur Favoritenliste hinzu.
+    **!happen_removefavseries** 
+        - Dadurch wird ein einzelner Favorit aus der gespeicherten Favoritenserie entfernt.
+    ''').strip().format(self.client.user)
+    await self.print(commands_list_part_4)
+    commands_list_part_5 = dedent('''
+      -
+      -
+      **Leaderboard/Statistics**
+
+      **!happen_recentraces <iRacing Client ID >** 
+        - Dies gibt detaillierte Informationen über die letzten 10 Rennen des angegebenen Benutzers. Wenn keine iRacing Client-ID angegeben wird, wird standardmäßig die gespeicherte ID des Benutzers angegeben, der sie aufgerufen hat. Wenn der Benutzer, der sie aufgerufen hat, ihre ID nicht gespeichert hat, muss er beim Aufrufen eine ID angeben.
+      **!happen_update** 
+        - Dadurch werden die gespeicherten Informationen nur für den Benutzer aktualisiert, der den Befehl aufgerufen hat.
+      **!happen_updateserver** 
+        - Dadurch werden die gespeicherten Informationen für alle Benutzer in der Discord für die Verwendung des Befehls !happen_leaderboard aktualisiert. Alle Zwietracht werden automatisch stündlich aktualisiert, so dass dies oft nicht mehr möglich ist. **HINWEIS:** Die iRacing-API wird nicht häufig aktualisiert, also selbst wenn Sie ein Rennen vor kurzem beendet haben und Änderungen erwarten, kann es bis zu einem Tag dauern, bis diejenigen auf dem Bot durchkommen.
+    ''').strip().format(self.client.user)
+    await self.print(commands_list_part_5)
+    commands_list_part_6 = dedent('''
+          **!happen_leaderboard <category> <type>** 
+        - Dadurch wird eine Bestenliste aller Benutzer mit gespeicherten IDs (über den Befehl !happen_saveid) für die angegebene Kategorie und den angegebenen Typ gedruckt. Kategorie kann jede von Straße, oval, Dirtroad und Dirtoval sein, aber es ist Standard auf Straße. Typ ist entweder Karriere oder jährlich, und es ist standard. karriere wird alle Zeitdaten anzeigen, und jährlich werden nur Daten aus dem laufenden Jahr angezeigt. **HINWEIS:** Dies kann mit einer Kategorie und keinem Typ aufgerufen werden, aber wenn Sie mit einem Typ anrufen möchten, müssen Sie eine Kategorie übergeben. Zum Beispiel kann ich !happen_leaderboard oval nennen, aber wenn ich die Straßenbestenliste jährlich angeben möchte, muss ich angeben: !happen_leaderboard Straße jährlich, !happen_leaderboard Jahr ist NICHT gültig.
+      **!happen_careerstats <iRacing Client ID>** 
+        - Dies gibt einen Überblick über die Karrierestatistiken des Spielers mit der angegebenen iRacing Client ID. Wenn keine iRacing Client-ID angegeben wird, wird die gespeicherte ID für den Benutzer verwendet, der den Befehl aufgerufen hat. Wenn der Benutzer seine ID nicht gespeichert hat, muss er eine iRacing-Client-ID angeben.
+      **!happen_yearlystats <iRacing Client ID>** 
+        - Dies gibt einen Überblick über die jährlichen Statistiken des Spielers mit der angegebenen iRacing Client ID. Wenn keine iRacing Client-ID angegeben wird, wird die gespeicherte ID für den Benutzer verwendet, der den Befehl aufgerufen hat. Wenn der Benutzer seine ID nicht gespeichert hat, muss er eine iRacing-Client-ID angeben.
+        ''').strip().format(self.client.user)
+    await self.print(commands_list_part_6)
   
   def parse_driver_identifier(self, text):
     identifier = text.strip()

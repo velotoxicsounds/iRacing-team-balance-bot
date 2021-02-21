@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: exception-notifier
+Version: 0.4
+Summary: Notify uncaught exceptions in your Python code
+Home-page: https://github.com/fossilet/exception-notifier
+Author: Yongzhi Pan
+Author-email: panyongzhi@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

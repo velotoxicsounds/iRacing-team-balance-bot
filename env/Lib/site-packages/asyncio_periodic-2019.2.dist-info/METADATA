@@ -1,0 +1,56 @@
+Metadata-Version: 2.1
+Name: asyncio-periodic
+Version: 2019.2
+Summary: Simple tool for run asyncio tasks periodically.
+Home-page: https://github.com/vd2org/periodic
+Author: Vd
+Author-email: vd@vd2.org
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: AsyncIO
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+
+# periodic
+
+Simple tool for run asyncio tasks periodically.
+
+# Setup
+
+```bash
+pip install asyncio-periodic
+```
+
+
+# Example usage
+
+```python
+import asyncio
+from datetime import datetime
+
+from periodic import Periodic
+
+
+async def periodically(param):
+    print(datetime.now(), 'Yay!', param)
+    await asyncio.sleep(1)
+    print(datetime.now(), 'Done!')
+
+async def main():
+    p = Periodic(3, periodically, 'Periodically!')
+    await p.start()
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.create_task(main())
+    loop.run_forever()
+```
+
