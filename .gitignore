@@ -1,5 +1,6 @@
 .env
 bot.log
 data/*/
-deploy.txt
+data/*.json
 runlist.txt
+__pycache__/
