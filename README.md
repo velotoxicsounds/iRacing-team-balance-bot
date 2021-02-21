@@ -1,4 +1,5 @@
 # iRacing-team-balance-bot
+
 Monitors the iRating of team members to find the optimal grouping of drivers into teams with balanced average iRating.
 
 The goal of this exercise is to try and get as many teams from the same group as possible into a single split of an iRacing special event, so they can all race together.
@@ -25,9 +26,9 @@ For instance you might start with `@iRacing Team Balance Bot list commands` to s
 
 The code is (hopefully) structured in a relatively modular way, such that if you wanted to use just part of it, you could. For instance:
 
-+ If you want the bot to do all of the same stuff, but you want to interact with it in a way that is not a Discord bot - maybe a Slack bot, maybe an SMS service, maybe just a CLI - just implement a new class that implements the basic `Interface` methods as seen in the DiscordChannel class.
-+ If you want to just take the balancing logic and do something else with it, you should be able to just take the Balancer class and use it for whatever you want.
-+ If you just want to do a better job of implementing the balancing algorithm but have the bot work exactly the same way, just replace the Balancer class with whatever you want, and then have the bot class use that instead.
+- If you want the bot to do all of the same stuff, but you want to interact with it in a way that is not a Discord bot - maybe a Slack bot, maybe an SMS service, maybe just a CLI - just implement a new class that implements the basic `Interface` methods as seen in the DiscordChannel class.
+- If you want to just take the balancing logic and do something else with it, you should be able to just take the Balancer class and use it for whatever you want.
+- If you just want to do a better job of implementing the balancing algorithm but have the bot work exactly the same way, just replace the Balancer class with whatever you want, and then have the bot class use that instead.
 
 ## Setup
 
@@ -42,6 +43,7 @@ Run main.py and your bot should start up, sending its log output to `bot.log`.
 ## Testing
 
 Run unit tests with
+
 ```
 python -m unittest discover -s tests
 ```
